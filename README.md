@@ -42,14 +42,18 @@ Regression: f_regression, mutual_info_regression
 f_classif and f_regression estimate the degree of linear dependence between two random variables and they are based on F-score.
 mutual_information can estimate any statistical dependency, but requires a large input as they are non-parameteric
 
+chi2--> Fisher score implementation, here the feature is non-negative or categorical
+f_classif --> ANOVA-F score implementation, here the feature is quantitative.
 
 SelectKBest: Select features with k highest scores
 ```
 from sklearn.feature_selection import SelectKBest, chi2
 num_features = 2
-X_train = SelectKBest(chi, k = num_features).fit_transform(X_train, y_train)
+X_train = SelectKBest(chi, k = num_features).fit_transform(X_train, y_train)  #Fisher score 
 print(X_train.shape)
 ```
+The chi squared test has a null hypothesis that the feature and the target are independent and alternative that they're are dependent.
+p is the probability that they are independent. Choose a small value of p to reject the null hypothesis.
 
 SelectPercentile: Select features based on the percentile of the highest scores
 
@@ -60,3 +64,16 @@ print(X_train.shape)
 
 #number of features that are in top 10 percentile
 ```
+
+1c. **Mutual Information**
+
+Measure how much each independent varible (feature) depends on the dependent varible(target) and select the ones with the maximum independent gain. If the feature and the target are independent, the information gain is 0, otherwise is a positive value.
+
+```
+from sklearn.feature_selection import mutual_info_classif #discrete target
+from sklearn.feature_selection import mutual_info_regression #continous target
+scores = mutual_info_classif(feature_df, target_df)
+```
+1d. **Correlation**
+Find the correlation among all the features and the target. Feature and target must be highly correlated and the features must be uncorrelated.
+
