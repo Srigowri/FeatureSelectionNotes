@@ -9,17 +9,11 @@
 1a. **Basic**
 ```
 from sklearn.feature_selection import VarianceThreshold
-```
+selection = VarianceThreshold(threshold=0)  #Remove constant features
 
-Remove constant features
-```
-  selection = VarianceThreshold(threshold=0)
-```
-Remove quasi-constant features
-
-(Constant over the majority of the dataset)
-```
-  selection = VarianceThreshold(threshold= 0.01)  #99% of the data to show some variance
+#(Constant over the majority of the dataset)
+selection = VarianceThreshold(threshold= 0.01)  #99% of the data to show some variance
+#Remove quasi-constant features
 ```
 ```
   selection.fit(X_train)  #X_train does not include the Target variable
@@ -36,14 +30,8 @@ https://scikit-learn.org/stable/modules/feature_selection.html
 
 Note!!! The input to these methods are scoring functions that return univariate scores and p-values.
 
-Classification : chi2, f_classif, mutual_info_classif
-Regression: f_regression, mutual_info_regression
-
-f_classif and f_regression estimate the degree of linear dependence between two random variables and they are based on F-score.
-mutual_information can estimate any statistical dependency, but requires a large input as they are non-parameteric
-
-chi2--> Fisher score implementation, here the feature is non-negative or categorical
-f_classif --> ANOVA-F score implementation, here the feature is quantitative.
+Classification : chi2 (Fisher score implementation, based on p-value), f_classif (ANOVA-F score implementation), mutual_info_classif (non-parameteric mutual infomation)
+Regression: f_regression (ANOVA-F score implementation), mutual_info_regression (non-parameteric mutual information)
 
 SelectKBest: Select features with k highest scores
 ```
@@ -76,4 +64,14 @@ scores = mutual_info_classif(feature_df, target_df)
 ```
 1d. **Correlation**
 Find the correlation among all the features and the target. Feature and target must be highly correlated and the features must be uncorrelated.
+```
+df = pd.DataFrame(feature_with_target)
+corr_matrix = df.corr()
+plt.figure(figsize=(8,6))
+plt.title('Correlation Heatmap of Iris Dataset')
+a = sns.heatmap(corr_matrix, square=True, annot=True, fmt='.2f', linecolor='black')
+a.set_xticklabels(a.get_xticklabels(), rotation=30)
+a.set_yticklabels(a.get_yticklabels(), rotation=30)           
+plt.show()    
+```
 
