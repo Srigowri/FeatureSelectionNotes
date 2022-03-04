@@ -14,13 +14,12 @@ selection = VarianceThreshold(threshold=0)  #Remove constant features
 #(Constant over the majority of the dataset)
 selection = VarianceThreshold(threshold= 0.01)  #99% of the data to show some variance
 #Remove quasi-constant features
-```
-```
-  selection.fit(X_train)  #X_train does not include the Target variable
-  selected_features = selection.get_support())  # a boolean vector
-  print("Number of non constant features", sum(selected_features))  
-  print(X_train.columns[selected_features])
-  X_train = selection.transform(X_train)
+
+selection.fit(X_train)  #X_train does not include the Target variable
+selected_features = selection.get_support())  # a boolean vector
+print("Number of non constant features", sum(selected_features))  
+print(X_train.columns[selected_features])
+X_train = selection.transform(X_train)
 ```
 1b. **Univariate Feature Selection**
 
@@ -34,24 +33,23 @@ Classification : chi2 (Fisher score implementation, based on p-value), f_classif
 Regression: f_regression (ANOVA-F score implementation), mutual_info_regression (non-parameteric mutual information)
 
 SelectKBest: Select features with k highest scores
+SelectPercentile: Select features based on the percentile of the highest scores
+
 ```
 from sklearn.feature_selection import SelectKBest, chi2
 num_features = 2
 X_train = SelectKBest(chi, k = num_features).fit_transform(X_train, y_train)  #Fisher score 
 print(X_train.shape)
-```
-The chi squared test has a null hypothesis that the feature and the target are independent and alternative that they're are dependent.
-p is the probability that they are independent. Choose a small value of p to reject the null hypothesis.
 
-SelectPercentile: Select features based on the percentile of the highest scores
-
-```
 from sklearn.feature_selection import SelectPercentile
 X_train = SelectPercentile(percentile = 10).fit_transform(X_train, y_train)
 print(X_train.shape)
 
 #number of features that are in top 10 percentile
 ```
+The chi squared test has a null hypothesis that the feature and the target are independent and alternative that they're are dependent.
+p is the probability that they are independent. Choose a small value of p to reject the null hypothesis.
+
 
 1c. **Mutual Information**
 
@@ -65,7 +63,7 @@ scores = mutual_info_classif(feature_df, target_df)
 1d. **Correlation**
 Find the correlation among all the features and the target. Feature and target must be highly correlated and the features must be uncorrelated.
 ```
-df = pd.DataFrame(feature_with_target)
+df = pd.DataFrame(X)
 corr_matrix = df.corr()
 plt.figure(figsize=(8,6))
 plt.title('Correlation Heatmap of Iris Dataset')
@@ -74,4 +72,40 @@ a.set_xticklabels(a.get_xticklabels(), rotation=30)
 a.set_yticklabels(a.get_yticklabels(), rotation=30)           
 plt.show()    
 ```
+Drop the features (columns) that have high correlation (indicating that feature is redundant)
+
+# Wrapper Methods
+This a computationally expensive search method, find the subset of the features that are important by training the model and checking the performance
+
+- Forward Selection  (Starts empty, iteratively adds up greedily- until no improvement in performance. Use mlxtend.feature_selection, usually roc or r2 is used as metrics)
+- Backward elimination (Starts with entire set and removes least significant feature, until no improvement in performance. Use mlxtend.feature_selection, usually roc or r2 is used as metrics)
+- Exhaustive feature selection - Enumerated over all subsets except empty set
+- Recursive feature selection [https://scikit-learn.org/stable/auto_examples/feature_selection/plot_rfe_digits.html#sphx-glr-auto-examples-feature-selection-plot-rfe-digits-py](url)
+- Recursive feature elimination (uses cross validation) [https://scikit-learn.org/stable/auto_examples/feature_selection/plot_rfe_with_cross_validation.html#sphx-glr-auto-examples-feature-selection-plot-rfe-with-cross-validation-py](url)
+
+
+```
+Forward Selection
+from mlxtend.feature_selection import SequentialFeatureSelector as SFS
+
+#perform any data preprocessing (converting categorical to numerical, removing few of highly correlated feature, removing highly independent feature wrt target) etc
+
+#model corresponds to either a classifier or a regressor
+Forward Selection
+sfs = SFS(model, k_features = 10, forward= True, floating = False, verbose=2, scoring='r2',cv=3)
+sfs.fit(X_train,y_train)
+print(sfs.k_feature_idx)
+print(X_train.columns[list(sfs.k_feature_idx)])
+
+
+#model corresponds to either a classifier or a regressor
+Backward Elimination
+sfs = SFS(model, k_features = 10, forward= False, floating = False, verbose=2, scoring='r2',cv=3)
+sfs.fit(X_train,y_train)
+print(sfs.k_feature_idx)
+print(X_train.columns[list(sfs.k_feature_idx)])
+
+```
+
+
 
