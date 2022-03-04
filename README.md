@@ -108,4 +108,15 @@ print(X_train.columns[list(sfs.k_feature_idx)])
 ```
 
 
+# Embedded Methods
+The regularization methods are embedded methods, in the sense that they penalize the features given a threshold for its coefficient.
+LASSO, RIDGE have in-built penalization functions and reduce overfitting. 
+
+Regularization is adding penalty to the parameters of ML model to restrict its freedom.
+
+**Lasso Regession**
+- Add L1 regularization i.e the value of the penalty added is the absolute magnitude of the coefficients
+- L1 regularization introduces sparsity by shrinking the coeffient to zero for certain features
+
+** need to add code for lasso, ridge and tree importance **
 
