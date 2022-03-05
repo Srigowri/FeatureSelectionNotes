@@ -114,9 +114,19 @@ LASSO, RIDGE have in-built penalization functions and reduce overfitting.
 
 Regularization is adding penalty to the parameters of ML model to restrict its freedom.
 
+
 **Lasso Regession**
 - Add L1 regularization i.e the value of the penalty added is the absolute magnitude of the coefficients
 - L1 regularization introduces sparsity by shrinking the coeffient to zero for certain features
 
-** need to add code for lasso, ridge and tree importance **
-
+```
+Note!!!: Linear Regression module of sklearn does not have regularization, hence import Lasso from linear_model
+from sklearn.linear_model import Lasso
+from sklearn.feature_selection import SelectFromModel
+penalty = 100
+selection = SelectFromModel(Lasso(alpha = penalty)) #be careful about the penalty, you don't want to remove necessary features
+selection.fit(X_train)   #perform any necessary data preprocessing steps.
+selected_features = X_train.columns[selection.get_support()] #get support() returns a vector of boolean values
+print(np.sum(selection.estimator_.coef_ == 0))
+```
+**Importance from Random Forest**
