@@ -31,6 +31,7 @@ for train, test in cv.split(X,y):
     
 mean_tpr = np.mean(tprs, axis = 0)
 mean_auc = auc(mean_fpr, mean_tpr)
+plt.plot([0,1],[0,1],linestyle = '--',lw = 2,color = 'black')  #random classifier
 plt.plot(mean_fpr, mean_tpr, color='blue',
          label=r'Mean ROC (AUC = %0.2f )' % (mean_auc),lw=2, alpha=1)
 
