@@ -1,0 +1,25 @@
+Sample statistics
+1. Comparing averages of the baseline and the distribution over the last minute.
+Eg: Test distribution is anomalous if Avg(T) >> Avg(B)
+If the averages are same, but the distribution is skewed then use 95th percentile between B and T to flag the anamoly.
+If the averages are same, distribution is skewed and the 95th percentile is also the same, then we can distinguish between B and T(except visually)
+
+Using a single sample statistics is not enough
+
+Alernative: multiple sample statistics, statistical distances
+
+
+**1. Kolmogorov-Smirnov test**
+- Tells if a sample is drawn from a reference distribution
+- Tells if two samples are drawn from the same distribution 
+- Steps- Input: Two distribution
+- - Draw the cumulative distribution of two distribution
+- - Take the maximum absolute difference which is a number between 0 and 1
+- - H0(null hypothesis): both samples are drawn from same distribution
+- - K: critical value at significance \alpha
+- - KS(T,B) <=K, accept H0 else reject H0
+- Does not provide where the anamoly is, KS test gives yes or no
+
+**2. Earth Mover's distance**
+
+**3. Wassertein Distance**
