@@ -68,7 +68,7 @@ counts_value  = data['temp'].value_counts().to_dict()
 data.loc[:,'temp_count2'] = data['temp'].map(counts_value)
 data
 ```
-**6. Target Mean Encodingg** 
+**6. Target Mean Encoding** 
 Find the mean of the categorical variable with respect to the target label.
 Group by the categorical variable, find mean of the target and map it back to the original dataframe
 ```
@@ -86,9 +86,11 @@ smoothed = (count * mean + weight * global_mean)/(count + weight)
 data[<categorical_variable>] = data[<categorical_variable>].map(smoothed)
 ```
 **7. Weight of evidence encoding and Probability encoding**
+```
 WoE = ln (P(Good)/P(Bad)) * 100
-PE = P(Good)/P(Bad) 
 
+PE = P(Good)/P(Bad) 
+```
 Both of these create a monotonic relation between the categorical variable and the target.
 
 
