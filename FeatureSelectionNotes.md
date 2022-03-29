@@ -38,7 +38,7 @@ SelectPercentile: Select features based on the percentile of the highest scores
 ```
 from sklearn.feature_selection import SelectKBest, chi2
 num_features = 2
-X_train = SelectKBest(chi, k = num_features).fit_transform(X_train, y_train)  #Fisher score 
+X_train = SelectKBest(chi2, k = num_features).fit_transform(X_train, y_train)  #Fisher score 
 print(X_train.shape)
 
 from sklearn.feature_selection import SelectPercentile
