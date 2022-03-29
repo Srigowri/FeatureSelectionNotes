@@ -3,7 +3,7 @@ Data is missed either randomly or almost-randomly or because of loss of data
 **1. Missing completely at Random [MCAR]**
 
 When the probability of a variable missing the data is same for all the observations, then the variable is MCAR.
-There is no relationship to the missing data and other values in the sample as it is not systematic.
+There is no relationship to the missing data and other values in the sample as it is not systematic. 
 
 **2. Missing at Random [MAR]**
 
