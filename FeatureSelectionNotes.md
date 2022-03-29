@@ -53,7 +53,7 @@ p is the probability that they are independent. Choose a small value of p to rej
 
 1c. **Mutual Information**
 
-Measure how much each independent varible (feature) depends on the dependent varible(target) and select the ones with the maximum independent gain. If the feature and the target are independent, the information gain is 0, otherwise is a positive value.
+Measure how much each independent variable (feature) depends on the dependent varible(target) and select the ones with the maximum independent gain. If the feature and the target are independent, the information gain is 0, otherwise is a positive value.
 
 ```
 from sklearn.feature_selection import mutual_info_classif #discrete target
@@ -117,7 +117,7 @@ Regularization is adding penalty to the parameters of ML model to restrict its f
 
 **Lasso Regession**
 - Add L1 regularization i.e the value of the penalty added is the absolute magnitude of the coefficients
-- L1 regularization introduces sparsity by shrinking the coeffient to zero for certain features
+- L1 regularization introduces sparsity by shrinking the coefficient to zero for certain features
 
 ```
 Note!!!: Linear Regression module of sklearn does not have regularization, hence import Lasso from linear_model
